@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<AssemblyName>0ModApi</AssemblyName>
+		<RootNamespace>ModLoader</RootNamespace>
+		<Author>Platonymous</Author>
+		<Platforms>AnyCPU</Platforms>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<TargetFramework>net452</TargetFramework>
+		<Version>1.0.0</Version>
+		<OutputPath>bin\Release\</OutputPath>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Lib.Harmony" Version="2.2.1" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Reference Include="FNA">
+	    <HintPath>libs_ce\FNA.dll</HintPath>
+	    <CopyLocal>False</CopyLocal>
+	  </Reference>
+	  <Reference Include="ParisEngine">
+	    <HintPath>libs_ce\ParisEngine.dll</HintPath>
+	    <CopyLocal>False</CopyLocal>
+	  </Reference>
+		<Reference Include="TMNT">
+			<HintPath>libs_ce\TMNT.exe</HintPath>
+			<CopyLocal>False</CopyLocal>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>libs_ce\Newtonsoft.Json.exe</HintPath>
+			<CopyLocal>False</CopyLocal>
+		</Reference>
+	</ItemGroup>
+
+</Project>

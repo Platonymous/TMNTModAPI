@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextureExtractor", "TextureExtractor\TextureExtractor.csproj", "{2936423A-5BD5-45EF-990A-B30EDA79AA1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParisSerializers", "ModHook\ParisSerializers.csproj", "{E16F4833-39FC-47E4-9649-7583AE176C18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModApi", "ModApi\ModApi.csproj", "{BFA2BA57-8A41-41D3-A8ED-EB4BBCC1A57E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2936423A-5BD5-45EF-990A-B30EDA79AA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2936423A-5BD5-45EF-990A-B30EDA79AA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2936423A-5BD5-45EF-990A-B30EDA79AA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2936423A-5BD5-45EF-990A-B30EDA79AA1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E16F4833-39FC-47E4-9649-7583AE176C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E16F4833-39FC-47E4-9649-7583AE176C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E16F4833-39FC-47E4-9649-7583AE176C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E16F4833-39FC-47E4-9649-7583AE176C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFA2BA57-8A41-41D3-A8ED-EB4BBCC1A57E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFA2BA57-8A41-41D3-A8ED-EB4BBCC1A57E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFA2BA57-8A41-41D3-A8ED-EB4BBCC1A57E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFA2BA57-8A41-41D3-A8ED-EB4BBCC1A57E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0072A22A-C753-4106-9693-E504FE2C2ECC}
+	EndGlobalSection
+EndGlobal
