@@ -49,7 +49,7 @@ namespace ModLoader
             if (config.Console)
             {
                 AllocConsole();
-                Console.Title = "TMNT (Modded)";
+                Console.Title = "TMNT Mod Api 1.0.1";
                 Thread inputThread = new Thread(() =>
                 {
                     while (true)
@@ -174,7 +174,13 @@ namespace ModLoader
                     try
                     {
                         var instance = Activator.CreateInstance(entryType);
-                        entryMethod.Invoke(instance, new object[] { h });
+                        var modp = typeof(IModHelper).FullName;
+                        var entryParam = entryMethod.GetParameters().Select(p => p.ParameterType.FullName).FirstOrDefault();
+                        object usep = null;
+                        if (entryParam != null && entryParam == modp)
+                            usep = h;
+
+                        entryMethod.Invoke(instance, new object[] { usep });
                     }
                     catch (Exception ex)
                     {
