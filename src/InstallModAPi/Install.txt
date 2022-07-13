@@ -1,0 +1,18 @@
+-Install-
+
+Extract the files and run InstallModApi.exe (preferably from the TMNT folder, but you can also show the programm where it is)
+IMPORTANT: If Windows does not want to run the exe file, right click on the file to open it's properties and allow it to run (bottom right checkbox of the properties window).
+
+or 
+
+Extract the files and then extract modapidata.zip into the same folder as TMNT.exe and rename ParisSerializers.dll to ParisSerializers.org.dll and ParisSerializers.mod to ParisSerializers.dll
+(use 7zip or some other programm or windows might block the modapis files aswell)
+
+-Uninstall-
+
+Delete ParisSerializers.dll and rename ParisSerializers.org.dll to ParisSerializers.dll
+or go to Steam -> TMNT -> Properties and choose "Verify intefrity of game files..."
+If you want you can also delete 0ModApi.dll, 0Harmony.dll and the Mods folder, but after renaming the ParisSerializer file they will be ignored.
+
+-Update-
+Follow the same steps as the initial installation, the old files will be replaced.
