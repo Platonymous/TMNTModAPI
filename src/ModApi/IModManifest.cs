@@ -19,6 +19,6 @@
 
         string Folder { get; }
 
-        string MinumumApiVersion { get; }
+        string MinimumApiVersion { get; }
     }
 }

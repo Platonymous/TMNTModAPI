@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<AssemblyName>InstallModApi</AssemblyName>
 		<RootNamespace>InstallModApi</RootNamespace>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<OutputType>Exe</OutputType>
 		<StartupObject>InstallModApi.Program</StartupObject>
 	</PropertyGroup>

@@ -28,7 +28,7 @@ namespace ModLoader
 
         const string CONFIG_FILENAME = "0ModApi.json";
         const string MODFOLDER = "Mods";
-        const string APIVERSION = "1.1.0";
+        const string APIVERSION = "1.2.1";
         internal const string MODCONTENT = "ModContent";
 
         internal ModVersion ApiVersion = new ModVersion(APIVERSION);
@@ -188,11 +188,11 @@ namespace ModLoader
                     continue;
                 }
 
-                var v = new ModVersion(m.MinumumApiVersion);
+                var v = new ModVersion(m.MinimumApiVersion);
 
                 if (!v.IsLowerOrEqualTo(ApiVersion))
                 {
-                    LogModLoad(m, false, m.Name + " requires Api Version " + m.Version + " or higher.");
+                    LogModLoad(m, false, m.Name + " requires Api Version " + m.MinimumApiVersion + " or higher.");
                     continue;
                 }
 

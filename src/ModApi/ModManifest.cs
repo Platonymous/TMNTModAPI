@@ -28,7 +28,7 @@ namespace ModLoader
 
         internal bool IsModApi => Id == "0ModApi";
 
-        public string MinumumApiVersion { get; set; } = "1.0.0";
+        public string MinimumApiVersion { get; set; } = "1.0.0";
 
     }
 }

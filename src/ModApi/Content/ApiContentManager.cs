@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ModLoader.Content
 {
-    internal class ApiContentManager : ParisContentManager
+    internal class ApiContentManager : ModContentManager
     {
         public ApiContentManager(IServiceProvider i_service, string i_sRoot) : base(i_service, i_sRoot)
         {
@@ -14,46 +14,35 @@ namespace ModLoader.Content
 
         public override T Load<T>(string i_assetName)
         {
-            if(EventManager.TriggerRequestingAssetEvent(i_assetName, typeof(T)) is T result)
+            if (EventManager.TriggerRequestingAssetEvent(i_assetName, typeof(T)) is T result)
                 return result;
 
-            try
+            DirectoryInfo modInfo = new DirectoryInfo(TMNTModApi.MODCONTENT);
+            DirectoryInfo contentInfo = new DirectoryInfo("Content");
+            var orgFolder = contentInfo.EnumerateDirectories().Select(d => d.Name).ToList();
+
+            if (typeof(T) == typeof(AudioContent))
+            {
+                if (TMNTModApi.Singleton.modHelper.Content.LoadContent<AudioContent>(i_assetName) is T ac)
+                    return ac;
+
+                foreach (var directory in modInfo.EnumerateDirectories())
+                    if (!orgFolder.Contains(directory.Name) && TMNTModApi.Singleton.modHelper.Content.LoadContent<T>(Path.Combine(directory.Name, "Content", i_assetName)) is T mAsset)
+                        return mAsset;
+            }
+            else
             {
                 if (DoesFileExist(TMNTModApi.MODCONTENT, i_assetName) && TMNTModApi.Singleton.modHelper.Content.LoadContent<T>(i_assetName) is T asset)
                     return asset;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-
-            try
-            {
-                DirectoryInfo modInfo = new DirectoryInfo(TMNTModApi.MODCONTENT);
-                DirectoryInfo contentInfo = new DirectoryInfo("Content");
-                var orgFolder = contentInfo.EnumerateDirectories().Select(d => d.Name).ToList();
 
                 foreach (var directory in modInfo.EnumerateDirectories())
                     if (!orgFolder.Contains(directory.Name) && DoesFileExist(Path.Combine(TMNTModApi.MODCONTENT, directory.Name, "Content"), i_assetName))
                         if (TMNTModApi.Singleton.modHelper.Content.LoadContent<T>(Path.Combine(directory.Name, "Content", i_assetName)) is T mAsset)
                             return mAsset;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
 
-            try { 
                 foreach (var pack in TMNTModApi.Singleton.modHelper.GetContentPacks())
                     if (DoesFileExist(pack.Manifest.Folder, i_assetName) && pack.Content.LoadContent<T>(i_assetName) is T packasset)
                         return packasset;
-            }
-            catch(Exception ex)
-            {   
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
             }
 
             T loaded = base.Load<T>(i_assetName);
