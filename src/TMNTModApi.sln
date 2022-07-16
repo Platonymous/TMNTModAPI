@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModApi", "ModApi\ModApi.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallModAPi", "InstallModAPi\InstallModAPi.csproj", "{42392CD3-33AD-474E-BFFD-280743E3BC9C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "targets", "targets", "{F5F402D9-EE54-4A36-B6CE-23259340D797}"
+	ProjectSection(SolutionItems) = preProject
+		common.targets = common.targets
+		private.targets = private.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

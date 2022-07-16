@@ -49,9 +49,6 @@ namespace InstallModApi
             if (File.Exists(Path.Combine(path, "0ModApi.dll")))
                 File.Delete(Path.Combine(path, "0ModApi.dll"));
 
-            if (File.Exists(Path.Combine(path, "0ModApi.json")))
-                File.Delete(Path.Combine(path, "0ModApi.json"));
-
             if (File.Exists(Path.Combine(path, "ParisSerializers.org.dll")))
                 File.Delete(Path.Combine(path, "ParisSerializers.dll"));
             else

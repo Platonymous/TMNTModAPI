@@ -1,4 +1,5 @@
-﻿using ModLoader.Content;
+﻿using ModLoader.Config;
+using ModLoader.Content;
 using ModLoader.Events;
 using ModLoader.Logs;
 using Paris.Engine;
@@ -20,12 +21,15 @@ namespace ModLoader
 
         public IContentHelper Content { get; private set; }
 
+        public IConfigHelper Config { get; private set; }
+
         public ModHelper(ModManifest modManifest)
         {
             Manifest = modManifest;
             Console = new ConsoleManager(this);
             Content = new ContentHelper(this);
             ContentPacks = new List<IModHelper>();
+            Config = new ConfigHelper(this); 
         }
 
         public IEnumerable<IModHelper> GetContentPacks()

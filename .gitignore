@@ -32,7 +32,7 @@ nuget.exe
 *.hidden.*
 **_dev
 **_backup
-
+private.targets
 
 #Archived
 Archived/

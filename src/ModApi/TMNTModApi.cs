@@ -10,6 +10,7 @@ using ModLoader.Events;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ModLoader.Utilities;
 
 namespace ModLoader
 {
@@ -27,6 +28,10 @@ namespace ModLoader
 
         const string CONFIG_FILENAME = "0ModApi.json";
         const string MODFOLDER = "Mods";
+        const string APIVERSION = "1.1.0";
+        internal const string MODCONTENT = "ModContent";
+
+        internal ModVersion ApiVersion = new ModVersion(APIVERSION);
 
 
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -35,6 +40,9 @@ namespace ModLoader
         [STAThread]
         public void Main()
         {
+            if (!Directory.Exists(MODCONTENT))
+                Directory.CreateDirectory(MODCONTENT);
+
             modHelper = new ModHelper(new ModManifest()
             {
                 Author = "Platonymous",
@@ -49,7 +57,7 @@ namespace ModLoader
             if (config.Console)
             {
                 AllocConsole();
-                Console.Title = "TMNT Mod Api 1.0.1";
+                Console.Title = "TMNT Mod Api " + APIVERSION;
                 Thread inputThread = new Thread(() =>
                 {
                     while (true)
@@ -95,8 +103,16 @@ namespace ModLoader
 
             modHelper.Console.Announcement("Loading Mods...");
             LoadMods();
-
        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if(args.Name.Contains("TMNTModLoader"))
+                return Assembly.GetExecutingAssembly();
+
+            return null;
+        }
+
 
         internal string GetRelativePath(string path)
         {
@@ -105,6 +121,8 @@ namespace ModLoader
 
         public void LoadMods()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve; ;
+
             JsonSerializer serializer = new JsonSerializer();
 
             if (!Directory.Exists(MODFOLDER))
@@ -139,6 +157,12 @@ namespace ModLoader
                 }
             }
 
+            foreach (var cp in contentPacks.Where(c => c.ContentPackFor.Equals("Content", StringComparison.OrdinalIgnoreCase)))
+            {
+                modHelper.ContentPacks.Add(new ModHelper(cp));
+                LogContentModLoad(modHelper.Manifest, true);
+            }
+
             foreach (var m in mods)
             {
                 var file = Path.Combine(m.Folder, m.EntryFile);
@@ -161,6 +185,14 @@ namespace ModLoader
                 if (entryType == null)
                 {
                     LogModLoad(m, false);
+                    continue;
+                }
+
+                var v = new ModVersion(m.MinumumApiVersion);
+
+                if (!v.IsLowerOrEqualTo(ApiVersion))
+                {
+                    LogModLoad(m, false, m.Name + " requires Api Version " + m.Version + " or higher.");
                     continue;
                 }
 
@@ -197,9 +229,11 @@ namespace ModLoader
                     LogContentModLoad(c.Manifest, true);
 
             }
+
+           
         }
 
-        internal void LogModLoad(IModManifest m, bool success)
+        internal void LogModLoad(IModManifest m, bool success, string message = "")
         {
             string modString = $"{m.Name} ({m.Version}) by {m.Author}";
 
@@ -207,6 +241,9 @@ namespace ModLoader
                 modHelper.Console.Success(modString, "Success");
             else
                 modHelper.Console.Failure(modString, "Failed");
+
+            if(!string.IsNullOrEmpty(message))
+                modHelper.Console.Error(message);
         }
 
         internal void LogContentModLoad(IModManifest m, bool success)
@@ -228,6 +265,20 @@ namespace ModLoader
         private void Singleton_GameInitialized(object sender, Events.GameInitializedEventArgs e)
         {
             modHelper.Console.Info("Game Initialized");
+
+            modHelper.Config.SetOptionsMenuEntry("verbose", "Verbose Log", 
+                (s) =>
+                {
+                    config.Verbose = (s.Choice == "ON");
+                    modHelper.Content.SaveJson(config, CONFIG_FILENAME);
+                }, () => config.Verbose ? "ON" : "OFF", "ON", "OFF");
+
+            modHelper.Config.SetOptionsMenuEntry("console", "Show Console",
+                (s) =>
+                {
+                    config.Console = (s.Choice == "ON");
+                    modHelper.Content.SaveJson(config, CONFIG_FILENAME);
+                }, () => config.Console ? "ON" : "OFF", "ON", "OFF");
         }
 
         internal static void DisplayMessage(string id, string message, float time)

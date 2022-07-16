@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Author>Platonymous</Author>
+		<Platforms>AnyCPU</Platforms>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<TargetFramework>net452</TargetFramework>
+		<OutputPath>bin\Release\</OutputPath>
+		<GamePath>C:\Program Files (x86)\Steam\steamapps\common\TMNT</GamePath>
+	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)\private.targets" />
+</Project>

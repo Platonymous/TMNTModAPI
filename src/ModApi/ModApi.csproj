@@ -3,36 +3,50 @@
 	<PropertyGroup>
 		<AssemblyName>0ModApi</AssemblyName>
 		<RootNamespace>ModLoader</RootNamespace>
-		<Author>Platonymous</Author>
-		<Platforms>AnyCPU</Platforms>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<TargetFramework>net452</TargetFramework>
 		<Version>1.0.0</Version>
-		<OutputPath>bin\Release\</OutputPath>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
+  <Import Project="$(SolutionDir)\common.targets" />
 
 	<ItemGroup>
 	  <PackageReference Include="Lib.Harmony" Version="2.2.1" />
 	</ItemGroup>
+
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ModHook\ParisSerializers.csproj" />
+	</ItemGroup>
 	
 	<ItemGroup>
 	  <Reference Include="FNA">
-	    <HintPath>libs_ce\FNA.dll</HintPath>
-	    <CopyLocal>False</CopyLocal>
+	    <HintPath>$(GamePath)\FNA.dll</HintPath>
+		  <Private>False</Private>
 	  </Reference>
 	  <Reference Include="ParisEngine">
-	    <HintPath>libs_ce\ParisEngine.dll</HintPath>
-	    <CopyLocal>False</CopyLocal>
+	    <HintPath>$(GamePath)\ParisEngine.dll</HintPath>
+		  <Private>False</Private>
 	  </Reference>
 		<Reference Include="TMNT">
-			<HintPath>libs_ce\TMNT.exe</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<HintPath>$(GamePath)\TMNT.exe</HintPath>
+			<Private>False</Private>
 		</Reference>
 		<Reference Include="Newtonsoft.Json">
-			<HintPath>libs_ce\Newtonsoft.Json.exe</HintPath>
-			<CopyLocal>False</CopyLocal>
+			<HintPath>$(GamePath)\Newtonsoft.Json.dll</HintPath>
+			<Private>False</Private>
 		</Reference>
 	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<ItemGroup>
+			<AllFiles Include="$(TargetDir)**\*.dll" Exclude="$(TargetDir)\ParisSerializers.dll" />
+		</ItemGroup>
+		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(GamePath)\%(RecursiveDir)"></Copy>
+		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(SolutionDir)_dev\modapidata\%(RecursiveDir)"></Copy>
+		<ZipDirectory Overwrite="true" SourceDirectory="$(SolutionDir)\_dev\modapidata" DestinationFile="$(SolutionDir)\_dev\modapidata.zip" />
+		<Copy SourceFiles="$(SolutionDir)\_dev\modapidata.zip" DestinationFolder="$(SolutionDir)_dev\install\"></Copy>
+		<Delete Files="$(SolutionDir)\_dev\modapidata.zip" />
+
+	</Target>
+
 
 </Project>

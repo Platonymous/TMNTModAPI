@@ -3,36 +3,34 @@
 	<PropertyGroup>
 		<AssemblyName>TextureExtractor</AssemblyName>
 		<RootNamespace>TextureExtractor</RootNamespace>
-		<Author>Platonymous</Author>
-		<Platforms>AnyCPU</Platforms>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<TargetFramework>net452</TargetFramework>
 		<Version>1.0.0</Version>
-		<OutputPath>bin\Release\</OutputPath>
 		<OutputType>Exe</OutputType>
 		<StartupObject>TextureExtractor.Program</StartupObject>
 		<ApplicationIcon>appicon.ico</ApplicationIcon>
 	</PropertyGroup>
+	<Import Project="$(SolutionDir)\common.targets" />
 
 	<ItemGroup>
 	  <Content Include="appicon.ico" />
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <Reference Include="FNA">
-	    <HintPath>libs_ce\FNA.dll</HintPath>
-	    <CopyLocal>False</CopyLocal>
-	  </Reference>
-	  <Reference Include="ParisEngine">
-	    <HintPath>libs_ce\ParisEngine.dll</HintPath>
-	    <CopyLocal>False</CopyLocal>
-	  </Reference>
+		<Reference Include="FNA">
+			<HintPath>$(GamePath)\FNA.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ParisEngine">
+			<HintPath>$(GamePath)\ParisEngine.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
 	</ItemGroup>
-	
-	<ItemGroup>
-	  <None Update="libs_ce\ParisEngine.dll">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<ItemGroup>
+			<AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.pdb" />
+		</ItemGroup>
+		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(GamePath)\%(RecursiveDir)"></Copy>
+
+	</Target>
 
 </Project>

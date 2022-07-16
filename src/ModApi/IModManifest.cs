@@ -11,7 +11,7 @@
 
         string Version { get; }
 
-        string EntryFile {get;}
+        string EntryFile { get; }
 
         string EntryMethod { get; }
 
@@ -19,5 +19,6 @@
 
         string Folder { get; }
 
+        string MinumumApiVersion { get; }
     }
 }
