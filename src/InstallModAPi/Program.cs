@@ -13,27 +13,27 @@ namespace InstallModApi
         static void Main(string[] args)
         {
             string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Console.WriteLine("Looking for TMNT.exe in " + path);
-            if (!File.Exists(Path.Combine(path, "TMNT.exe")))
+            Console.WriteLine("Looking for ParisSerializers.dll in " + path);
+            if (!File.Exists(Path.Combine(path, "ParisSerializers.dll")))
             {
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("TMNT.exe was not found, press any key to locate it.");
+                Console.WriteLine("ParisSerializers.dll was not found, press any key to locate it.");
                 Console.ReadKey();
                 OpenFileDialog OFD = new OpenFileDialog();
                 OFD.Multiselect = false;
-                OFD.Title = "Locate TMNT.exe";
-                OFD.Filter = "TMNT|TMNT.exe";
+                OFD.Title = "Locate ParisSerializers.dll";
+                OFD.Filter = "TMNT|ParisSerializers.dll";
                 OFD.ShowDialog();
                 string filePath = OFD.FileName;
                 path = Path.GetDirectoryName(filePath.ToString());
 
-                if(!File.Exists(Path.Combine(path, "TMNT.exe")))
-                    CloseWithError("Could not find TMNT.exe in " + path);
+                if(!File.Exists(Path.Combine(path, "ParisSerializers.dll")))
+                    CloseWithError("Could not find ParisSerializers.dll in " + path);
             }
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("TMNT.exe found in " + path);
+            Console.WriteLine("ParisSerializers.dll found in " + path);
 
             if (!File.Exists("modapidata.zip"))
                 CloseWithError("Could not locate modapidata.dat");
