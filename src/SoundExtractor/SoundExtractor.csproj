@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<AssemblyName>SoundExtractor</AssemblyName>
+		<RootNamespace>SoundExtractor</RootNamespace>
+		<Version>1.0.1</Version>
+		<OutputType>Exe</OutputType>
+		<StartupObject>SoundExtractor.Program</StartupObject>
+		<ApplicationIcon>appicon.ico</ApplicationIcon>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)\common.targets" />
+
+	<ItemGroup>
+	  <Content Include="appicon.ico" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Reference Include="FNA">
+			<HintPath>$(GamePath)\FNA.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="ParisEngine">
+			<HintPath>$(GamePath)\ParisEngine.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<ItemGroup>
+			<AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.pdb" />
+		</ItemGroup>
+		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(GamePath)\%(RecursiveDir)"></Copy>
+		<Delete Files="$(TargetDir)\SoundExtractor.pdb" />
+		<Delete Files="$(TargetDir)\SoundExtractor.exe.config" />
+
+		<ZipDirectory Overwrite="true" SourceDirectory="$(TargetDir)" DestinationFile="$(SolutionDir)\..\releases\SoundExtractor_$(Version).zip" />
+
+	</Target>
+
+</Project>
