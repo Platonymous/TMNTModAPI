@@ -6,7 +6,6 @@
 		<Version>1.0.6</Version>
 		<OutputType>Exe</OutputType>
 		<StartupObject>SFXExtractor.Program</StartupObject>
-		<ApplicationIcon>appicon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<Import Project="$(SolutionDir)\common.targets" />
 	
@@ -27,6 +26,8 @@
 			<AllFiles Include="$(TargetDir)**\*.*" />
 		</ItemGroup>
 		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(GamePath)\%(RecursiveDir)"></Copy>
+		<Delete Files="$(TargetDir)\SFXExtractor.pdb" />
+		<Delete Files="$(TargetDir)\SFXExtractor.exe.config" />
 
 		<ZipDirectory Overwrite="true" SourceDirectory="$(TargetDir)" DestinationFile="$(SolutionDir)\..\releases\SFXExtractor_$(Version).zip" />
 
