@@ -1,19 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<AssemblyName>SoundExtractor</AssemblyName>
-		<RootNamespace>SoundExtractor</RootNamespace>
-		<Version>1.0.3</Version>
+		<AssemblyName>SFXExtractor</AssemblyName>
+		<RootNamespace>SFXExtractor</RootNamespace>
+		<Version>1.0.6</Version>
 		<OutputType>Exe</OutputType>
-		<StartupObject>SoundExtractor.Program</StartupObject>
+		<StartupObject>SFXExtractor.Program</StartupObject>
 		<ApplicationIcon>appicon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<Import Project="$(SolutionDir)\common.targets" />
-	
-
-	<ItemGroup>
-	  <Content Include="appicon.ico" />
-	</ItemGroup>
 	
 	<ItemGroup>
 		<Reference Include="FNA">
@@ -28,13 +23,11 @@
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>
-			<AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.pdb" />
+			<AllFiles Include="$(TargetDir)**\*.*" />
 		</ItemGroup>
 		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(GamePath)\%(RecursiveDir)"></Copy>
-		<Delete Files="$(TargetDir)\SoundExtractor.pdb" />
-		<Delete Files="$(TargetDir)\SoundExtractor.exe.config" />
 
-		<ZipDirectory Overwrite="true" SourceDirectory="$(TargetDir)" DestinationFile="$(SolutionDir)\..\releases\SoundExtractor_$(Version).zip" />
+		<ZipDirectory Overwrite="true" SourceDirectory="$(TargetDir)" DestinationFile="$(SolutionDir)\..\releases\SFXExtractor_$(Version).zip" />
 
 	</Target>
 

@@ -6,12 +6,13 @@ using Paris.Engine;
 using Microsoft.Xna.Framework;
 using System.Linq;
 
-namespace SoundExtractor
+namespace SFXExtractor
 {
     public class Program
     {
         const string _exportFolderPath = "Extracted";
         const string _pathToContent = "Content";
+        const string _version = "1.0.6";
 
         static void Main(string[] args)
         {
@@ -32,10 +33,11 @@ namespace SoundExtractor
             }
 
             game.RunOneFrame();
-            Console.Clear();
-            SoundSettings soundSettings = content.Load<SoundSettings>(@"Audio\SoundsSettings.zpbn");
 
-            int count = soundSettings.Sounds.Count;
+            SoundSettings ss = content.Load<SoundSettings>(@"Audio\SoundsSettings.zpbn");
+            var files = Directory.EnumerateFiles(_pathToContent, "*.ogg", SearchOption.AllDirectories);
+
+            int count = ss.Sounds.Count + files.Count();
             int done = 0;
             int fullbar = 50;
 
@@ -43,15 +45,12 @@ namespace SoundExtractor
             if (File.Exists(path))
                 using (FileStream input = File.OpenRead(path))
                 using (BinaryReader binaryReader = new BinaryReader((Stream)input))
-                    for (int index = 0; index < soundSettings.Sounds.Count; ++index)
+                    for (int index = 0; index < ss.Sounds.Count; ++index)
                     {
-                        string file = Path.Combine("Audio",soundSettings.Sounds[index].SoundID);
+                        string file = Path.Combine("Audio",ss.Sounds[index].SoundID);
                         Console.Clear();
-
-
-                        Console.WriteLine("SoundExtractor 1.0.3 by Platonymous");
+                        Console.WriteLine("SoundExtractor "+ _version+ " by Platonymous");
                         Console.WriteLine("Next File: " + file);
-
                         Console.Write("Extracting SFX... [");
                         float percent = (float)done / count;
                         int bars = (int)Math.Ceiling(percent * fullbar);
@@ -63,7 +62,7 @@ namespace SoundExtractor
                             Console.Write("-");
 
                         Console.Write("] " + Math.Ceiling(percent * 100) + "%");
-                        SoundSettings.SoundInfo sound = soundSettings.Sounds[index];
+                        SoundSettings.SoundInfo sound = ss.Sounds[index];
                         int bytecount = binaryReader.ReadInt32();
                         byte[] data = binaryReader.ReadBytes(bytecount);
 
@@ -80,12 +79,6 @@ namespace SoundExtractor
                         done++;
                     }
 
-            var files = Directory.EnumerateFiles(_pathToContent, "*.ogg", SearchOption.AllDirectories);
-
-            count = files.Count();
-            done = 0;
-            fullbar = 50;
-
             foreach (string currentFile in files)
             {
                 var extension = Path.GetExtension(currentFile);
@@ -93,9 +86,8 @@ namespace SoundExtractor
                 Console.Clear();
 
                 var file = currentFile.Replace(@"Content/", "").Replace(@"Content\", "").Replace(extension, "");
-                Console.WriteLine("SoundExtractor 1.0.3 by Platonymous");
+                Console.WriteLine("SoundExtractor " + _version + " by Platonymous");
                 Console.WriteLine("Next File: " + file);
-
                 Console.Write("Copying Music... [");
 
                 float percent = (float)done / count;
@@ -123,7 +115,7 @@ namespace SoundExtractor
             Environment.Exit(0);
         }
 
-        private static void WriteWave(BinaryWriter writer, int channels, int rate, byte[] data)
+        internal static void WriteWave(BinaryWriter writer, int channels, int rate, byte[] data)
         {
             writer.Write(new char[4] { 'R', 'I', 'F', 'F' });
             writer.Write((36 + data.Length));

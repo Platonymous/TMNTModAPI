@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParisSerializers", "ModHook
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModApi", "ModApi\ModApi.csproj", "{BFA2BA57-8A41-41D3-A8ED-EB4BBCC1A57E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallModAPi", "InstallModAPi\InstallModAPi.csproj", "{42392CD3-33AD-474E-BFFD-280743E3BC9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InstallModAPi", "InstallModAPi\InstallModAPi.csproj", "{42392CD3-33AD-474E-BFFD-280743E3BC9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "targets", "targets", "{F5F402D9-EE54-4A36-B6CE-23259340D797}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "targets", "targets", "{F5F4
 		private.targets = private.targets
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundExtractor", "SoundExtractor\SoundExtractor.csproj", "{4DD07E80-26E1-4183-9DB2-16381C47EBC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SfxExtractor", "SfxExtractor\SfxExtractor.csproj", "{80FE10B5-CB4F-46DD-BC31-3465BF221ADB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{42392CD3-33AD-474E-BFFD-280743E3BC9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42392CD3-33AD-474E-BFFD-280743E3BC9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42392CD3-33AD-474E-BFFD-280743E3BC9C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4DD07E80-26E1-4183-9DB2-16381C47EBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DD07E80-26E1-4183-9DB2-16381C47EBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DD07E80-26E1-4183-9DB2-16381C47EBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DD07E80-26E1-4183-9DB2-16381C47EBC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80FE10B5-CB4F-46DD-BC31-3465BF221ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80FE10B5-CB4F-46DD-BC31-3465BF221ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80FE10B5-CB4F-46DD-BC31-3465BF221ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80FE10B5-CB4F-46DD-BC31-3465BF221ADB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
