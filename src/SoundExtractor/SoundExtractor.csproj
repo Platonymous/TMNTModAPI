@@ -3,12 +3,13 @@
 	<PropertyGroup>
 		<AssemblyName>SoundExtractor</AssemblyName>
 		<RootNamespace>SoundExtractor</RootNamespace>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<OutputType>Exe</OutputType>
 		<StartupObject>SoundExtractor.Program</StartupObject>
 		<ApplicationIcon>appicon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<Import Project="$(SolutionDir)\common.targets" />
+	
 
 	<ItemGroup>
 	  <Content Include="appicon.ico" />

@@ -5,8 +5,6 @@ using Paris.Engine.Context;
 using Paris.Engine;
 using Microsoft.Xna.Framework;
 using System.Linq;
-using System.IO.Compression;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace SoundExtractor
 {
@@ -51,7 +49,7 @@ namespace SoundExtractor
                         Console.Clear();
 
 
-                        Console.WriteLine("SoundExtractor 1.0.0 by Platonymous");
+                        Console.WriteLine("SoundExtractor 1.0.3 by Platonymous");
                         Console.WriteLine("Next File: " + file);
 
                         Console.Write("Extracting SFX... [");
@@ -95,7 +93,7 @@ namespace SoundExtractor
                 Console.Clear();
 
                 var file = currentFile.Replace(@"Content/", "").Replace(@"Content\", "").Replace(extension, "");
-                Console.WriteLine("SoundExtractor 1.0.0 by Platonymous");
+                Console.WriteLine("SoundExtractor 1.0.3 by Platonymous");
                 Console.WriteLine("Next File: " + file);
 
                 Console.Write("Copying Music... [");
