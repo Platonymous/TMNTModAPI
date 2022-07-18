@@ -18,7 +18,7 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
-	
+	<!--
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>
 			<AllFiles Include="$(TargetDir)**\*.*" Exclude="$(TargetDir)**\*.pdb" />
@@ -28,6 +28,6 @@
 		<ZipDirectory Overwrite="true" SourceDirectory="$(SolutionDir)\_dev\install" DestinationFile="$(SolutionDir)\..\releases\TMNTModApi_$(Version).zip" />
 		<Copy SourceFiles="@(InstallFiles)" DestinationFolder="$(GamePath)"></Copy>
 		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(GamePath)"></Copy>
-	</Target>
+	</Target>-->
 
 </Project>
