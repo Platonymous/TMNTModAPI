@@ -26,10 +26,10 @@ namespace SFXExtractor
                 var ass = Assembly.LoadFrom("ParisSerializers.org.dll");
                 var bcm = BinaryContentManager.Singleton;
 
-               typeof(BinaryContentManager).GetField("_parisSerializerAssembly", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(bcm, ass);
+                typeof(BinaryContentManager).GetField("_parisSerializerAssembly", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(bcm, ass);
                 AppDomain.CurrentDomain.Load(ass.GetName());
 
-               typeof(BinaryContentManager).GetMethod("AddAssemblyReadWriters", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(bcm, new object[] { ass });
+                typeof(BinaryContentManager).GetMethod("AddAssemblyReadWriters", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(bcm, new object[] { ass });
             }
 
             game.RunOneFrame();
@@ -47,9 +47,9 @@ namespace SFXExtractor
                 using (BinaryReader binaryReader = new BinaryReader((Stream)input))
                     for (int index = 0; index < ss.Sounds.Count; ++index)
                     {
-                        string file = Path.Combine("Audio",ss.Sounds[index].SoundID);
+                        string file = Path.Combine("Audio", ss.Sounds[index].SoundID);
                         Console.Clear();
-                        Console.WriteLine("SoundExtractor "+ _version+ " by Platonymous");
+                        Console.WriteLine("SoundExtractor " + _version + " by Platonymous");
                         Console.WriteLine("Next File: " + file);
                         Console.Write("Extracting SFX... [");
                         float percent = (float)done / count;

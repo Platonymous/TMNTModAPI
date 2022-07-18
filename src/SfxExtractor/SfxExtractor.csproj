@@ -4,18 +4,11 @@
 		<AssemblyName>SFXExtractor</AssemblyName>
 		<RootNamespace>SFXExtractor</RootNamespace>
 		<Version>1.0.6</Version>
-		<Author>Platonymous</Author>
-		<Platforms>AnyCPU</Platforms>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<TargetFramework>net48</TargetFramework>
-		<OutputPath>bin\Release\</OutputPath>
-		<GamePath>C:\Program Files (x86)\Steam\steamapps\common\TMNT</GamePath>
 		<OutputType>Exe</OutputType>
 		<StartupObject>SFXExtractor.Program</StartupObject>
 		<ApplicationIcon>appicon.ico</ApplicationIcon>
-		<AutoGenerateBindingRedirects>False</AutoGenerateBindingRedirects>
 	</PropertyGroup>
-	<Import Project="$(SolutionDir)\private.targets" />
+	<Import Project="$(SolutionDir)\common.targets" />
 	
 	
 	<ItemGroup>
