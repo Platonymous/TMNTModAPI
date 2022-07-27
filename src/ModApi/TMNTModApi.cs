@@ -28,7 +28,7 @@ namespace ModLoader
 
         const string CONFIG_FILENAME = "0ModApi.json";
         const string MODFOLDER = "Mods";
-        const string APIVERSION = "1.2.1";
+        const string APIVERSION = "1.2.2";
         internal const string MODCONTENT = "ModContent";
 
         internal ModVersion ApiVersion = new ModVersion(APIVERSION);
@@ -53,10 +53,26 @@ namespace ModLoader
 
 
             config = modHelper.Content.LoadJson<ModApiConfig>(CONFIG_FILENAME, new ModApiConfig(), true);
-
-            if (config.Console)
+            bool ingoreConsole = File.Exists("Mono.Posix.dll");
+            if (!ingoreConsole && config.Console)
             {
                 AllocConsole();
+
+                FileStream ostrm;
+                StreamWriter writer;
+                TextWriter oldOut = Console.Out;
+                try
+                {
+                    ostrm = new FileStream("ModApi.log", FileMode.OpenOrCreate, FileAccess.Write);
+                    writer = new LogWriter(ostrm,oldOut);
+                }
+                catch (Exception e)
+                {
+                    modHelper.Console.Error("Cannot open ModApi.log for writing");
+                    modHelper.Console.Trace(e.Message);
+                    return;
+                }
+                Console.SetOut(writer);
                 Console.Title = "TMNT Mod Api " + APIVERSION;
                 Thread inputThread = new Thread(() =>
                 {
@@ -72,6 +88,7 @@ namespace ModLoader
                     }
                 });
                 inputThread.Start();
+
             }
 
             EventManager.Singleton.Init();
@@ -283,9 +300,7 @@ namespace ModLoader
 
         internal static void DisplayMessage(string id, string message, float time)
         {
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine($"[{id}][{time}] {message}");
-            Console.ForegroundColor = ConsoleColor.White;
+            Singleton.modHelper.Console.Log($"[{id}][{time}] {message}");
         }
     }
 }

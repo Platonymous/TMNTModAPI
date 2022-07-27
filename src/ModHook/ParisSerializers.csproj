@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<AssemblyName>ParisSerializers</AssemblyName>
-		<RootNamespace>ParisSerializer</RootNamespace>
+		<AssemblyName>ModdedParisSerializers</AssemblyName>
+		<RootNamespace>ModdedParisSerializers</RootNamespace>
 		<Version>1.0.0</Version>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
@@ -25,8 +25,9 @@
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>
-			<DllFile Include="$(TargetDir)\ParisSerializers.dll" />
+			<DllFile Include="$(TargetDir)\ModdedParisSerializers.dll" />
 		</ItemGroup>
+		<Copy SourceFiles="@(DllFile)" DestinationFiles="$(GamePath)\ParisSerializers.mod.dll"></Copy>
 		<Copy SourceFiles="@(DllFile)" DestinationFiles="$(SolutionDir)\_dev\modapidata\ParisSerializers.mod.dll"></Copy>
 
 	</Target>

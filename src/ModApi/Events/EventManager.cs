@@ -32,6 +32,10 @@ namespace ModLoader.Events
 
         public event EventHandler<UpdateTickEventArgs> UpdateTicked;
 
+        public event EventHandler<DrawEventArgs> BeforeDraw;
+
+        public event EventHandler<DrawEventArgs> AfterDraw;
+
         public event EventHandler<ConsoleInputReceivedEventArgs> ConsoleInputReceived;
 
         public event EventHandler<ContextSwitchedEventArgs> ContextSwitched;
@@ -83,7 +87,18 @@ namespace ModLoader.Events
                     original: typeof(ContextManager).GetMethod("SwitchToContext", new Type[] { typeof(string), typeof(float), typeof(Color), typeof(bool), typeof(bool), typeof(BaseController), typeof(bool) }),
                     prefix: new HarmonyMethod(GetType().GetMethod(nameof(SwitchToContext), BindingFlags.NonPublic | BindingFlags.Static))
                     );
-            
+
+                harmony.Patch(
+                    original: typeof(Paris.Paris).GetMethod("Draw", BindingFlags.NonPublic | BindingFlags.Instance),
+                    prefix: new HarmonyMethod(GetType().GetMethod(nameof(BeforeDrawPatch), BindingFlags.NonPublic | BindingFlags.Static))
+                    );
+
+
+                harmony.Patch(
+                    original: typeof(Paris.Paris).GetMethod("Draw", BindingFlags.NonPublic | BindingFlags.Instance),
+                    postfix: new HarmonyMethod(GetType().GetMethod(nameof(AfterDrawPatch), BindingFlags.NonPublic | BindingFlags.Static))
+                    );
+
 
             }
             catch(Exception e)
@@ -92,6 +107,16 @@ namespace ModLoader.Events
                 TMNTModApi.Singleton.modHelper.Console.Trace(e.StackTrace);
             }
 
+        }
+
+        internal static void BeforeDrawPatch(GameTime i_gameTime)
+        {
+            Singleton.BeforeDraw?.Invoke(null, new DrawEventArgs(i_gameTime));
+        }
+
+        internal static void AfterDrawPatch(GameTime i_gameTime)
+        {
+            Singleton.AfterDraw?.Invoke(null, new DrawEventArgs(i_gameTime));
         }
 
         internal static void StartNewContentManager(ContextManager __instance, ref ParisContentManager __result)

@@ -14,6 +14,10 @@ namespace ModLoader.Events
 
         event EventHandler<UpdateTickEventArgs> UpdateTicked;
 
+        event EventHandler<DrawEventArgs> BeforeDraw;
+
+        event EventHandler<DrawEventArgs> AfterDraw;
+
         event EventHandler<ContextSwitchedEventArgs> ContextSwitched;
     }
 }

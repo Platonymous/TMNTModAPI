@@ -47,7 +47,7 @@ namespace ModLoader.Content
 
             T loaded = base.Load<T>(i_assetName);
 
-            return EventManager.TriggerAssetLoadedEvent(i_assetName, loaded);
+            return EventManager.TriggerAssetLoadedEvent(i_assetName.Replace('/', '\\'), loaded);
         }
 
         public bool DoesFileExist(string folder, string assetName)

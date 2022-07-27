@@ -243,7 +243,6 @@ namespace ModLoader.Config
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
                 
             }
         }

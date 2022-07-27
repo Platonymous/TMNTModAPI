@@ -3,7 +3,7 @@ using System.Reflection;
 using Paris.Engine;
 using ModLoader;
 
-namespace ParisSerializer
+namespace ModdedParisSerializers
 {
     public class ModReadWriter : BinaryReadWriter
     {

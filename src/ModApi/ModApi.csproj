@@ -11,11 +11,6 @@
 	<ItemGroup>
 	  <PackageReference Include="Lib.Harmony" Version="2.2.1" />
 	</ItemGroup>
-
-
-	<ItemGroup>
-	  <ProjectReference Include="..\ModHook\ParisSerializers.csproj" />
-	</ItemGroup>
 	
 	<ItemGroup>
 	  <Reference Include="FNA">
@@ -38,7 +33,7 @@
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<ItemGroup>
-			<AllFiles Include="$(TargetDir)**\*.dll" Exclude="$(TargetDir)\ParisSerializers.dll" />
+			<AllFiles Include="$(TargetDir)**\*.dll" Exclude="$(TargetDir)\ModdedParisSerializers.dll" />
 		</ItemGroup>
 		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(GamePath)\%(RecursiveDir)"></Copy>
 		<Copy SourceFiles="@(AllFiles)" DestinationFolder="$(SolutionDir)_dev\modapidata\%(RecursiveDir)"></Copy>

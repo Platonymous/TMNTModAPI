@@ -20,6 +20,7 @@ namespace SFXExtractor
             typeof(Game).GetField("graphicsDeviceService", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(game, new GraphicsDeviceManager(game));
             ParisContentManager content = new ParisContentManager((IServiceProvider)game.Services, "Content");
             ContextManager context = new ContextManager(game);
+            context.GlobalContentManager = content;
 
             if (File.Exists("ParisSerializers.org.dll"))
             {

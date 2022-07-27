@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,12 @@ namespace ModLoader.Logs
         private ModHelper helper;
         private Dictionary<string, Action<string, string[]>> consoleCommands;
         private Action<object, ConsoleInputReceivedEventArgs> commandHandler;
+        private bool ingoreConsole = false;
 
         public ConsoleManager(ModHelper modhelper)
         {
+            ingoreConsole = File.Exists("Mono.Posix.dll");
+
             helper = modhelper;
             consoleCommands = new Dictionary<string, Action<string, string[]>>();
         }
@@ -33,6 +37,9 @@ namespace ModLoader.Logs
 
         internal void WriteMessage(string message, string type, ConsoleColor color)
         {
+            if (ingoreConsole)
+                return;
+
             Console.ForegroundColor = color;
             Console.WriteLine($"[{helper.Manifest.Name}][{type}] {message}");
             Console.ForegroundColor = ConsoleColor.White;
@@ -40,6 +47,9 @@ namespace ModLoader.Logs
 
         internal void WriteTwoPartMessage(string message1, string message2, string type, ConsoleColor color1, ConsoleColor color2)
         {
+            if (ingoreConsole)
+                return;
+
             Console.ForegroundColor = color1;
             Console.Write($"[{helper.Manifest.Name}][{type}] {message1}");
             Console.ForegroundColor = color2;
