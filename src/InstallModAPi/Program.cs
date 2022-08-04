@@ -49,8 +49,19 @@ namespace InstallModApi
             if (File.Exists(Path.Combine(path, "0ModApi.dll")))
                 File.Delete(Path.Combine(path, "0ModApi.dll"));
 
+
+
             if (File.Exists(Path.Combine(path, "ParisSerializers.org.dll")))
-                File.Delete(Path.Combine(path, "ParisSerializers.dll"));
+            {
+                var fi = new FileInfo(Path.Combine(path, "ParisSerializers.dll"));
+                if (fi.Length >= 400000)
+                {
+                    File.Delete(Path.Combine(path, "ParisSerializers.org.dll"));
+                    File.Copy(Path.Combine(path, "ParisSerializers.dll"), Path.Combine(path, "ParisSerializers.org.dll"));
+                }
+                else
+                    File.Delete(Path.Combine(path, "ParisSerializers.dll"));
+            }
             else
             {
                 File.Copy(Path.Combine(path, "ParisSerializers.dll"), Path.Combine(path, "ParisSerializers.org.dll"));
