@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SfxExtractor", "SfxExtracto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentExtractor", "ContentExtractor\ContentExtractor.csproj", "{3F2BDDC9-378F-436D-A5B9-2D308B86D278}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMXTile", "TMXTile\TMXTile.csproj", "{D6A6B564-B42B-487D-A9AF-44635AA43DA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3F2BDDC9-378F-436D-A5B9-2D308B86D278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F2BDDC9-378F-436D-A5B9-2D308B86D278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F2BDDC9-378F-436D-A5B9-2D308B86D278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A6B564-B42B-487D-A9AF-44635AA43DA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A6B564-B42B-487D-A9AF-44635AA43DA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A6B564-B42B-487D-A9AF-44635AA43DA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A6B564-B42B-487D-A9AF-44635AA43DA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

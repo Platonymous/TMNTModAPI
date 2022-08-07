@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using ModLoader.Events;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using ModLoader.Utilities;
 
 namespace ModLoader

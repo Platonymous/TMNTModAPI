@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>TMXTile</AssemblyName>
+    <RootNamespace>TMXTile</RootNamespace>
+    <Version>1.0.0</Version>
+    <TargetFramework>net452</TargetFramework>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Authors>Platonymous</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+</Project>

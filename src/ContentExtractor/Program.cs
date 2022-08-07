@@ -8,7 +8,8 @@ using Paris.Engine;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO.Compression;
-using HarmonyLib;
+using Newtonsoft.Json;
+using Paris.Engine.Data;
 
 namespace ContentExtractor
 {
@@ -21,11 +22,15 @@ namespace ContentExtractor
         static int done = 0;
         static int count = 0;
         const int fullbar = 50;
-        static Harmony harmony;
+        static Assembly _parisSerializerAssembly;
+
+        static List<string> AllTypes = new List<string>();
+        static List<string> FailedTypes = new List<string>();
 
         static void Main(string[] args)
         {
-            harmony = new Harmony("Platonymous.ContentExtractor");
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
             Game game = new Game();
             typeof(Game).GetField("graphicsDeviceService", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(game, new GraphicsDeviceManager(game));
             ParisContentManager content = new ParisContentManager((IServiceProvider)game.Services, "Content");
@@ -34,6 +39,9 @@ namespace ContentExtractor
 
             LoadParisSerializers();
 
+            ParisObject.SerializingScope = GameObjectAttributes.PropertyScope.All;
+
+                EngineSettings.Singleton = content.Load<EngineSettings>("Global\\EngineSettings");
             game.RunOneFrame();
 
             SoundSettings ss = content.Load<SoundSettings>(@"Audio\SoundsSettings.zpbn");
@@ -55,17 +63,17 @@ namespace ContentExtractor
                     var file = currentFile.Replace(@"Content/", "").Replace(@"Content\", "").Replace(extension, "");
                     if (extension == ".ogg" || extension == ".ogv" || extension == ".wav" || extension == ".mp4" || extension == ".json" || extension == ".pbn" || extension == ".png")
                     {
-                        DrawBars(file, "File");
-                        ExtractTexture(file, currentFile, content);
+                        DrawBars(file, "Content");
+                        CopyFile(file, currentFile);
                     }
                     else if (extension == ".zxnb" || extension == ".xnb")
                     {
-                        DrawBars(file, "Texture");
+                        DrawBars(file, "Content");
                         ExtractTexture(file, currentFile, content);
                     }
                     else if (extension == ".zpbn")
                     {
-                        DrawBars(file, "Data");
+                        DrawBars(file, "Content");
                         ExtractData(file, currentFile);
                     }
                 }
@@ -75,18 +83,68 @@ namespace ContentExtractor
             Console.Write(" DONE");
             Environment.Exit(0);
         }
-        
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.Name == "Paris")
+                try
+                {
+                    return Assembly.LoadFrom("TMNT.exe");
+                }
+                catch
+                {
+                    return null;
+                }
+
+            if (args.Name == "ParisSerializers")
+                return _parisSerializerAssembly;
+
+            return null;
+        }
+
         static void ExtractData(string file, string currentFile)
         {
             string folder = EnsureDirectory(Path.Combine(_exportFolderPath, Path.GetDirectoryName(file)));
-
+            bool handled = false;
             using (var fsin = File.OpenRead(currentFile))
             using (var deflate = new DeflateStream(fsin, CompressionMode.Decompress))
-            using (var fsout = File.Create(Path.Combine(folder, Path.GetFileName(currentFile.Replace(".zpbn",".pbn")))))
-                deflate.CopyTo(fsout);
+            using (var reader = new BinaryReader(deflate))
+                handled = ExportAsJson(currentFile,folder,reader);
+
+            if (!handled || true)
+                using (var fsin = File.OpenRead(currentFile))
+                using (var deflate = new DeflateStream(fsin, CompressionMode.Decompress))
+                using (var reader = new BinaryReader(deflate))
+                using (var fsout = File.Create(Path.Combine(folder, Path.GetFileName(currentFile.Replace(".zpbn", ".pbn")))))
+                    deflate.CopyTo(fsout);
         }
 
-        static Assembly _parisSerializerAssembly;
+        public static bool ExportAsJson(string currentFile, string folder, BinaryReader reader)
+        {
+            string readerType = "unknown";
+            try
+            {
+                BinaryReadWriter readWriter = BinaryContentManager.Singleton.ReadTypeReader(reader);
+                readerType = readWriter?.GetType().Name ?? readerType;
+                object obj = null;
+
+                readWriter.Read(reader, ref obj);
+                
+                File.WriteAllText(Path.Combine(folder, Path.GetFileName(currentFile.Replace(".zpbn", ".json"))), JsonConvert.SerializeObject(obj, Formatting.Indented));
+
+                if (!AllTypes.Contains(readerType))
+                    AllTypes.Add(readerType);
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                if (!FailedTypes.Contains(readerType))
+                    FailedTypes.Add(readerType);
+
+                return false;
+            }
+        }
 
         public static void LoadParisSerializers()
         {
@@ -114,7 +172,7 @@ namespace ContentExtractor
                     for (int index = 0; index < ss.Sounds.Count; ++index)
                     {
                         string file = Path.Combine("Audio", ss.Sounds[index].SoundID);
-                        DrawBars(file, "SFX");
+                        DrawBars(file, "Content");
                         SoundSettings.SoundInfo sound = ss.Sounds[index];
                         int bytecount = binaryReader.ReadInt32();
                         byte[] data = binaryReader.ReadBytes(bytecount);
